@@ -26,15 +26,13 @@ registerWhen(register("renderWorld", () => {
     }
 }), () => currentPattern.length);
 
-register("renderWorld", () => {
-  if(!itsHappening) return;
-  if(!currentPattern.length) return;
+registerWhen(register("renderWorld", () => {
   let blockStr = currentPattern[i-1]
   let [x, y, z] = blockStr.split(",")
   x = parseFloat(x) - .5
   z = parseFloat(z) + .4
   RenderLib.drawInnerEspBox(x, y, z, 1, 1, 0, .5, .5, .75, 0);
-});
+}), () => itsHappening && currentPattern.length);
 
 
 register("playerInteract", (action, pos) => {
