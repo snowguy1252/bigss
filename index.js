@@ -3,7 +3,7 @@
 import { registerWhen } from "../BloomCore/utils/Utils"
 import RenderLib from "../RenderLib"
 
-const buttonLocations = [-17, -37];
+const buttonLocations = [-17, -37, -51];
 
 let i = 0;
 let timer = 0;
@@ -44,7 +44,6 @@ register("playerInteract", (action, pos) => {
   if(action.toString() !== "RIGHT_CLICK_BLOCK") return;
   if(itsHappening) return;
   let [x, y, z] = [pos.getX(), pos.getY(), pos.getZ()]
-
   // if it's the start button
   if (y == 5 && z == -26 && buttonLocations.includes(x)) { 
     buttonLocation = buttonLocations.indexOf(x);
