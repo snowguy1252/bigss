@@ -3,14 +3,17 @@
 import { registerWhen } from "../BloomCore/utils/Utils"
 import RenderLib from "../RenderLib"
 
+const buttonLocations = [-17, -37];
+
 let i = 0;
 let timer = 0;
 let onPhase = -1;
-let locations = getLocations();
+let locations = null;
 let pattern = [];
 let currentPattern = [];
 let itsHappening = false;
 let blockWrongClicks = true;
+let buttonLocation = -1;
 
 register("command", () => blockWrongClicks = !blockWrongClicks).setName("bigss");
 
@@ -44,7 +47,8 @@ register("playerInteract", (action, pos) => {
   let [x, y, z] = [pos.getX(), pos.getY(), pos.getZ()]
 
   // if it's the start button
-  if (x == -17 && y == 5 && z == -26) {
+  if (y == 5 && z == -26 && buttonLocations.includes(x)) { 
+    buttonLocation = buttonLocations.indexOf(x);
     reset();
     initSS();
     return;
@@ -81,6 +85,7 @@ register("playerInteract", (action, pos) => {
 function initSS() {
   timer = Date.now();
   onPhase = 1;
+  locations = getLocations();
   pattern = shuffle(locations);
   runPhase();
 }
@@ -101,7 +106,7 @@ function runPhase() {
 }
 
 function getLocations() {
-  let [x0, y0, z0] = [-17, 4.0, -25];
+  let [x0, y0, z0] = [buttonLocations[buttonLocation], 4.0, -25];
   let buttons = [];
   for (let dy = 0; dy <= 3; dy++) {
     for (let dz = 0; dz <= 3; dz++) {
