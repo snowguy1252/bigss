@@ -10,6 +10,9 @@ let locations = getLocations();
 let pattern = [];
 let currentPattern = [];
 let itsHappening = false;
+let blockWrongClicks = true;
+
+register("command", () => blockWrongClicks = !blockWrongClicks).setName("bigss");
 
 const BUTTONWIDTH = 0.4
 const BUTTONHEIGHT = 0.26
@@ -55,6 +58,7 @@ register("playerInteract", (action, pos) => {
   let str = [x+1, y, z+1].join(",")
   
   if(currentPattern[0] != str) {
+    if(blockWrongClicks) return;
     ChatLib.chat("You Failed!");
     return reset();
   }
