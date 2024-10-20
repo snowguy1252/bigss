@@ -3,7 +3,7 @@
 import { registerWhen } from "../BloomCore/utils/Utils"
 import RenderLib from "../RenderLib"
 
-const buttonLocations = [-17, -37, -51, -74];
+const buttonLocations = [-17, -37, -51, -74, 7];
 
 let i = 0;
 let timer = 0;
