@@ -3,7 +3,7 @@
 import { registerWhen } from "../BloomCore/utils/Utils"
 import RenderLib from "../RenderLib"
 
-const buttonLocations = [-17, -37, -51];
+const buttonLocations = [-17, -37, -51, -74];
 
 let i = 0;
 let timer = 0;
@@ -81,6 +81,8 @@ register("playerInteract", (action, pos) => {
     runPhase();
   }
 })
+
+register("worldLoad", () => reset());
 
 function initSS() {
   timer = Date.now();
