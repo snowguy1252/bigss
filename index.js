@@ -12,10 +12,8 @@ let locations = null;
 let pattern = [];
 let currentPattern = [];
 let itsHappening = false;
-let blockWrongClicks = true;
 let buttonLocation = -1;
-
-register("command", () => blockWrongClicks = !blockWrongClicks).setName("bigss");
+let pb = -1;
 
 const BUTTONWIDTH = 0.4
 const BUTTONHEIGHT = 0.26
@@ -63,16 +61,18 @@ register("playerInteract", (action, pos) => {
   let str = [x+1, y, z+1].join(",")
   
   if(currentPattern[0] != str) {
-    if(blockWrongClicks) return;
-    ChatLib.chat("You Failed!");
-    return reset();
+    return;
+    // ChatLib.chat("You Failed!");
+    // return reset();
   }
 
   World.playSound("note.pling", 1, 2);
   currentPattern = currentPattern.splice(1);
 
   if(onPhase==4 && !currentPattern.length) {
-    ChatLib.chat(`SS Completed in ${((Date.now()-timer)/1000).toFixed(2)}`);
+    let completedIn = ((Date.now()-timer)/1000).toFixed(2);
+    if(completedIn < pb || pb <= 0) pb = completedIn;
+    ChatLib.chat(`SS Completed in ${completedIn} &7(${pb})`);
     reset();
     return;
   }
