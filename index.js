@@ -4,6 +4,8 @@ import { registerWhen } from "../BloomCore/utils/Utils"
 import RenderLib from "../RenderLib"
 
 let blocks = []
+let temp = []
+let itsHappening = false
 
 const BUTTONWIDTH = 0.4
 const BUTTONHEIGHT = 0.26
@@ -20,15 +22,35 @@ registerWhen(register("renderWorld", () => {
     }
 }), () => blocks.length);
 
+registerWhen(register("renderWorld", () => {
+  if(!blocks.length) return;
+  let blockStr = blocks[blocks.length-1]
+  let [x, y, z] = blockStr.split(",")
+  x = parseFloat(x) - .5
+  z = parseFloat(z) + .4
+  RenderLib.drawInnerEspBox(x, y, z, 1, 1, 0, .5, .5, .75, 0);
+}), () => itsHappening);
+
 // Vector3f[-17.0, 5.0, -26.0]
 let timer = 0
 register("playerInteract", (action, pos) => {
+  if(itsHappening) return;
   if(action.toString() !== "RIGHT_CLICK_BLOCK") return
   let [x, y, z] = [pos.getX(), pos.getY(), pos.getZ()]
 
   // SS Start Button, reset everything
   if (x == -17 && y == 5 && z == -26) {
-      blocks = genPattern()
+      blocks = []
+      temp = []
+      itsHappening = true
+      temp = genPattern()
+      let zzz = 0
+      for (let idx = 0; idx < 6; idx++) {
+        setTimeout(() => {
+          addToBlocks(zzz)
+          zzz++
+        }, 500 * idx)
+    }
       return
   }
   if(!blocks) return;
@@ -38,16 +60,26 @@ register("playerInteract", (action, pos) => {
   if(!blocks.includes(str) || (blocks[blocks.length-1] == str && blocks.length!=1)) {
     ChatLib.chat("You Failed!");
     blocks = []
+    temp = []
     timer = 0;
     return;
   }
 
   if(blocks.length==5) timer = Date.now()
   blocks = blocks.splice(1)
+  World.playSound("note.pling", 1, 2)
   if(blocks.length==0) {
     ChatLib.chat(`SS Completed in ${((Date.now()-timer)/1000).toFixed(2)}`)
   }
 })
+
+function addToBlocks(num) {
+  if(num==5) {
+    itsHappening = false
+    return
+  }
+  blocks.push(temp[num])
+}
 
 
 function genPattern() {
