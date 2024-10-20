@@ -20,6 +20,7 @@ register("command", () => blockWrongClicks = !blockWrongClicks).setName("bigss")
 const BUTTONWIDTH = 0.4
 const BUTTONHEIGHT = 0.26
 registerWhen(register("renderWorld", () => {
+    if(itsHappening) renderBackground();
     const b = [...currentPattern]
     for (let i = 0; i < b.length; i++) {
         let [x, y, z] = b[i].split(",").map(a => parseInt(a))
@@ -32,13 +33,13 @@ registerWhen(register("renderWorld", () => {
     }
 }), () => currentPattern.length);
 
-registerWhen(register("renderWorld", () => {
+function renderBackground() {
   let blockStr = currentPattern[i-1]
   let [x, y, z] = blockStr.split(",")
   x = parseFloat(x) - .5
   z = parseFloat(z) + .4
   RenderLib.drawInnerEspBox(x, y, z, 1, 1, 0, .5, .5, .75, 0);
-}), () => itsHappening && currentPattern.length);
+}
 
 
 register("playerInteract", (action, pos) => {
