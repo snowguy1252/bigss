@@ -57,7 +57,7 @@ register("playerInteract", (action, pos) => {
   let isButton = World.getBlockAt(x, y, z).type.getID() == 77
   let str = [x+1, y, z+1].join(",")
   if (!isButton) return
-  if(blocks[0] != str) {
+  if(blocks[0] != str && blocks.length) {
     ChatLib.chat("You Failed!");
     blocks = []
     temp = []
@@ -70,6 +70,9 @@ register("playerInteract", (action, pos) => {
   World.playSound("note.pling", 1, 2)
   if(blocks.length==0) {
     ChatLib.chat(`SS Completed in ${((Date.now()-timer)/1000).toFixed(2)}`)
+    timer = 0;
+    blocks = []
+    temp = []
   }
 })
 
