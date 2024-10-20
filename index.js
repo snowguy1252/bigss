@@ -3,7 +3,7 @@
 import { registerWhen } from "../BloomCore/utils/Utils"
 import RenderLib from "../RenderLib"
 
-const buttonLocations = [-17, -37, -51, -74, 7];
+const buttonLocations = [-17, -37, -51, -74, 7, -60, -6];
 
 let i = 0;
 let timer = 0;
@@ -69,7 +69,8 @@ register("playerInteract", (action, pos) => {
   currentPattern = currentPattern.splice(1);
 
   if(onPhase==4 && !currentPattern.length) {
-    let completedIn = ((Date.now()-timer)/1000).toFixed(2);
+    let completedIn = parseFloat((Date.now()-timer)/1000).toFixed(2);
+    pb = parseFloat(pb)
     if(completedIn < pb || pb <= 0) pb = completedIn;
     ChatLib.chat(`SS Completed in ${completedIn} &7(${pb})`);
     reset();
