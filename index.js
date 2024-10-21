@@ -13,6 +13,7 @@ let locations = null;
 let pattern = [];
 let currentPattern = [];
 let itsHappening = false;
+let splits = false;
 let buttonLocation = -1;
 let pb = -1;
 
@@ -80,7 +81,7 @@ register("playerInteract", (action, pos) => {
     for(let i=0; i<timings.length; i+=2) {
       timingString = timingString.concat(`${((timings[i+1]-timings[i])/1000).toFixed(2)} `)
     }
-    ChatLib.chat(`${completedIn}: ${timingString}`)
+    if(splits) ChatLib.chat(`${completedIn}: ${timingString}`)
     reset();
     return;
   }
@@ -144,6 +145,8 @@ function shuffle(bigarray) {
 
   return array;
 }
+
+register("command", () => splits = !splits).setName("bigss");
 
 function reset() {
   i = 0;
