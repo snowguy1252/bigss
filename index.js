@@ -7,6 +7,7 @@ const buttonLocations = [-17, -37, -51, -74, 7, -60, -6, -28];
 
 let i = 0;
 let timer = 0;
+let timings = []
 let onPhase = -1;
 let locations = null;
 let pattern = [];
@@ -69,16 +70,24 @@ register("playerInteract", (action, pos) => {
   currentPattern = currentPattern.splice(1);
 
   if(onPhase==4 && !currentPattern.length) {
-    let completedIn = parseFloat((Date.now()-timer)/1000).toFixed(2);
+    let timeNow = Date.now();
+    timings.push(timeNow);
+    let completedIn = parseFloat((timeNow-timer)/1000).toFixed(2);
     pb = parseFloat(pb)
     if(completedIn < pb || pb <= 0) pb = completedIn;
     ChatLib.chat(`SS Completed in ${completedIn} &7(${pb})`);
+    let timingString = "";
+    for(let i=0; i<timings.length; i+=2) {
+      timingString = timingString.concat(`${((timings[i+1]-timings[i])/1000).toFixed(2)} `)
+    }
+    ChatLib.chat(`${completedIn}: ${timingString}`)
     reset();
     return;
   }
 
   if(!currentPattern.length) {
     onPhase += 1;
+    timings.push(Date.now());
     runPhase();
   }
 })
@@ -100,6 +109,7 @@ function runPhase() {
     setTimeout( () => {
       if(i>onPhase) {
         itsHappening = false
+        timings.push(Date.now())
         return;
       }
       currentPattern.push(pattern[i]);
@@ -139,6 +149,7 @@ function reset() {
   i = 0;
   timer = 0
   onPhase = -1;
+  timings = [];
   pattern = [];
   currentPattern = [];
 }
