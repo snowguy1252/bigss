@@ -7,6 +7,8 @@ const buttonLocations = [-17, -37, -51, -74, 7, -60, -6, -28];
 
 let timer = 0;
 let tracker = 0;
+let average = 0;
+let aN = 0;
 let timings = []
 let onPhase = -1;
 let locations = null;
@@ -76,7 +78,9 @@ register("playerInteract", (action, pos) => {
     let completedIn = parseFloat((timeNow-timer)/1000).toFixed(2);
     pb = parseFloat(pb)
     if(completedIn < pb || pb <= 0) pb = completedIn;
-    ChatLib.chat(`SS Completed in ${completedIn} &7(${pb})`);
+    aN += 1;
+    average = (average * (aN-1)/aN + (completedIn/aN)).toFixed(2);
+    ChatLib.chat(`SS Completed in ${completedIn} &7(${pb}) [${average}]`);
     let timingString = "";
     for(let j=0; j<timings.length; j+=2) {
       timingString = timingString.concat(`${((timings[j+1]-timings[j])/1000).toFixed(2)} `)
