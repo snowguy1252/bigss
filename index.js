@@ -29,8 +29,7 @@ registerWhen(register("renderWorld", () => {
         if (i == 1) color = [1, 1, 0]
         else if (i > 1) color = [1, 0, 0]
 
-        if (Config.simonSolverStyle == 0) RenderLib.drawInnerEspBox(x+0.29, y+0.2, z+0.5, 0.6, 0.6, ...color, 0.7, false)
-        else RenderLib.drawInnerEspBox(x-0.5, y+0.5-BUTTONHEIGHT/2+0.001, z+0.05, BUTTONWIDTH, BUTTONHEIGHT, ...color, 0.7, false)
+        RenderLib.drawInnerEspBox(x-0.5, y+0.5-BUTTONHEIGHT/2+0.001, z+0.07, BUTTONWIDTH, BUTTONHEIGHT, ...color, 0.7, false)
     }
 }), () => currentPattern.length);
 
