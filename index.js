@@ -193,7 +193,7 @@ register("command", (...args) => {
       ChatLib.chat("splits, fullblock");
       break;
   }
-}).setName("bigss");
+}).setName("bigss").setTabCompletions(["splits", "fullblock"]);
 
 
 function reset() {
