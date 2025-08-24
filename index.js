@@ -40,7 +40,7 @@ registerWhen(register("renderWorld", () => {
             color = [1, 0, 0];
         }
 
-        RenderLib.drawInnerEspBox(x - 0.5, y + 0.5 - BUTTONHEIGHT / 2 - 0.001, z + 0.61, BUTTONWIDTH, BUTTONHEIGHT+0.0005, ...color, 0.7, false);
+        RenderLib.drawInnerEspBox(x - 0.5, y + 0.5 - BUTTONHEIGHT / 2, z + 0.61, BUTTONWIDTH, BUTTONHEIGHT+0.0005, ...color, 0.7, false);
     }
 }), () => currentPattern.length);
 
